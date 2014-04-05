@@ -1,0 +1,50 @@
+# simple
+a=5
+for x in range(a):
+    print(x)
+print("Happy end")
+
+
+# big_code_txt 
+def fun(x):
+    s=x*2
+    print(x)
+    return(s)
+
+a=5
+stuff = []
+for x in range(a):
+    print("loop")
+    if x%2==0:
+        stuff.append(x)
+    else:
+        fun(x)
+print("Happy end")
+print( stuff )
+
+
+
+# function
+def fun(x):
+    return x*2
+
+print(fun(x))
+
+
+
+# nested loop
+a=5
+for x in range(a):
+    for y in range(x)
+        print(x, y)
+print("Happy end")
+
+
+# nested if, with outer "else"
+a=5
+if a > 5:
+    if a < 10:
+        print("good")
+else:
+    print("bad")
+print("Happy end")
