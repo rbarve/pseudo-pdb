@@ -6,6 +6,9 @@ TODO:
   _tp(0)
   for x in range(3): _tp(0); print(x); print("next")
 
+* make chained elif's/elses to stop on all listed conditions,
+  not only the proper one   
+
 * implement watches and breakpoints :)
 
 * maybe somehow catch returning from functions

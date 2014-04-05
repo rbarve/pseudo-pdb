@@ -7,6 +7,17 @@ for x in range(a):
 print("Happy end")
 """
 
+# if elif else
+ifelifelse_code_txt = """
+a=5
+if a > 8:
+    print("good)
+elif a >= 5:
+    print("not bad")
+else:
+    print("bad")
+print("Happy end")
+"""
 
 # result simple
 simple_result_txt ="""
@@ -47,9 +58,22 @@ for x in range(5):    print(x)
 
 
 ########################################################################
+#                   Helpers
+########################################################################
+def rchop_by_set( mystr, separators ):
+    """ helps to split into 2 parts without using regexp (as not sure if Brython supports re) """
+    for i in range(len(mystr)):
+        if mystr[i] in separators:
+            return mystr[:i] # return only first part
+
+
+########################################################################
+#               Code parsing and so on            
 ########################################################################
 
-code_txt = simple_code_txt
+#~ code_txt = simple_code_txt
+code_txt = ifelifelse_code_txt
+code_txt = code_txt.replace('\t', '    ') #get rid of tabs :)
 
 DBG = True
 
@@ -62,14 +86,15 @@ lines = code_txt.split('\n')
 indentation_stack = [ dict(cause='', cause_lineno=0, indent='') ]
 tracecalls = [   ]  # dict( when='before|after', place_lineno=, target_lineno=.., indent=.. )
 
-
 for nr, line in enumerate(lines):
     if not line.strip(' \t\n\r'):  # if empty line
         continue
         
     line_wo_indent = line.lstrip(' \t')
     indent = line[:-len(line_wo_indent)]
-    first_word = line and line_wo_indent.split()[0]
+    #TODO -- guarantee that it takes first word OK 
+    #~ first_word = line and line_wo_indent.split()[0] # was a bug with "else:"
+    first_word = rchop_by_set(line, ' \t([{:\'"\\') 
 
     if indentation_stack[-1]['indent'] == None:  # if it was'nt set 
         indentation_stack[-1]['indent'] = indent
@@ -77,10 +102,9 @@ for nr, line in enumerate(lines):
     if tracecalls and tracecalls[-1]['indent'] is None: # and  tracecalls[-1]['when']=='after' 
         tracecalls[-1]['indent'] = indent
         
-    if first_word in 'for while if elif else def'.split():
-
+    if first_word in 'for while if elif else def class try except with'.split():
         
-        if first_word == 'else':
+        if first_word in 'else elif'.split():
             when='after'
         else:
             when='before'
@@ -90,7 +114,8 @@ for nr, line in enumerate(lines):
                 when=when,
                 place_lineno=nr,
                 target_lineno=nr,
-                indent=indent if when=='before' else None
+                indent=indent if when=='before' else None,
+                cause=first_word,
             )
         )
 
@@ -125,9 +150,9 @@ for nr, line in enumerate(lines):
 #~ for x in [ "%s: %s" % (nr, line) for nr, line in enumerate(lines)]:
     #~ print(x)
 
-#~ print('\n#--------- Trace Calls -------------')
-#~ for x in tracecalls:
-    #~ print ("#", x)
+print('\n#--------- Trace Calls -------------')
+for x in tracecalls:
+    print ("#", x)
     
 def construct_result():
 
