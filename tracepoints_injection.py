@@ -111,7 +111,7 @@ for nr, line in enumerate(lines):
     if indentation_stack[-1]['indent']:
         while indent < indentation_stack[-1]['indent']:
             last_indent = indentation_stack.pop()
-            if last_indent['cause'] in 'for while'.split():
+            if last_indent['cause'] in 'for while'.split():   # TODO: "for" might not be needed here (though in C++ it should)
                 tracecalls.append(
                     dict(  # could inject "before current nr" but, less confusion -- "after previous nr"
                         when='after',

@@ -1,0 +1,12 @@
+TODO:
+
+* make injections to oneliners , example:
+  for x in range(3): print(x); print("next")
+  --should probably become-->
+  _tp(0)
+  for x in range(3): _tp(0); print(x); print("next")
+
+* implement watches and breakpoints :)
+
+* maybe somehow catch returning from functions
+  to see better, which value is returned (as in PythonTutor)
