@@ -195,27 +195,29 @@ def construct_result():
     return '\n'.join(result)
 
 
-print('\n#--------- code with TracePoint calls -------------\n\n')
+print ('\n#--------- code with TracePoint calls -------------\n\n')
 
 
-TRACECALL_CODE = \
-"original_code = \"\"\"%s\"\"\"\n\n" % code_txt  +\
-"original_code_lines = original_code.split('\\n') \n\n" % lines  +\
-"STEPS = True \n\n" +\
-"def %s( lineno ): \n" %TRACECALL_NAME  +\
+# doesn't work with pythonjs translator.py...
+TRACECALL_CODE = (
+"original_code = \"\"\"%s\"\"\"\n\n" % code_txt  +
+"original_code_lines = original_code.split('\\n') \n\n" % lines  +
+"STEPS = True \n\n" +
+"def %s( lineno ): \n" %TRACECALL_NAME  +
 """
     if STEPS:
         # highlight( lineno )
-        print("\\n–––––––––––– %s ––––––––––––––" % lineno)
+        print ("\\n------------ %s --------------" % lineno)
         for nr, line in enumerate(original_code_lines):
             if nr == lineno:
                 prefix = '->   '
             else:
                 prefix = '     '
-            print( prefix + line )                
-        print("–––––––––––––––––––––––––––––" )
+            print ( prefix + line )                
+        print ("-----------------------------" )
         
 """
+)
 
 print( TRACECALL_CODE )
 
