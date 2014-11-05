@@ -64,6 +64,7 @@ def rchop_by_set( mystr, separators ):
     for i in range(len(mystr)):
         if mystr[i] in separators:
             return mystr[:i] # return only first part
+    return mystr # for pass/break/continue or plain return
 
 
 ########################################################################
