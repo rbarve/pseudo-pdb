@@ -1,4 +1,3 @@
-
 # simple
 simple_code_txt = """
 a=5               
@@ -94,7 +93,7 @@ for nr, line in enumerate(lines):
     indent = line[:-len(line_wo_indent)]
     #TODO -- guarantee that it takes first word OK 
     #~ first_word = line and line_wo_indent.split()[0] # was a bug with "else:"
-    first_word = rchop_by_set(line, ' \t([{:\'"\\') 
+    first_word = rchop_by_set(line_wo_indent, ' \t([{:\'"\\') 
 
     if indentation_stack[-1]['indent'] == None:  # if it was'nt set/known 
         indentation_stack[-1]['indent'] = indent
